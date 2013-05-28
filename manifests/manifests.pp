@@ -31,8 +31,6 @@ exec {
   require => [  Exec["yum_install_nodejs"] ];
 }
 
-
-
 #exec {
 #  "create_tempFolder":
 #    command => "/bin/mkdir /tmp/sources",
@@ -72,10 +70,6 @@ exec {
 #}
 
 exec {
-#  "create_RepoFolder":
-#    command => "/bin/mkdir /opt/widget-the-people",
-#    require => [Exec[ "yum_install_nodejs" ]];
-
   "fetch_repo":
     cwd => "/opt",
     command => "/usr/bin/git clone https://github.com/douglasback/widget-the-people.git",
@@ -85,6 +79,8 @@ exec {
     cwd => "/opt/widget-the-people",
     command => "/usr/bin/whoami > /vagrant/whoami",
     require => [Exec["fetch_repo"]];
+
+# NOTE: npm installs must be done with sudo
 
   "install_app":
     cwd => "/opt/widget-the-people",
@@ -96,8 +92,8 @@ exec {
     command => "/usr/bin/node app.js&",
     require => [Exec["install_app"]];
 }
-#
-## disable pesky iptables. ick security!
+
+# disable pesky iptables. ick security!
 exec { "disable_iptable":
   command => "iptables save",
   path => "/etc/init.d/",
