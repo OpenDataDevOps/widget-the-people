@@ -37,6 +37,7 @@ exec {
   "make_nodejs":
     cwd => "/tmp/sources/node-v0.10.8",
     command => "/usr/bin/make",
+    timeout => 0,
     require => [ Exec["config_nodejs"]];
 
   "install_nodejs":
@@ -65,7 +66,8 @@ exec {
 
   "install_app":
     cwd => "/opt/widget-the-people",
-    command => "/usr/local/bin/npm install",
+    command => "/usr/bin/sudo /usr/local/bin/npm install",
+    timeout => 0,
     require => [Exec["fetch_repo"]];
 
   "run_app":

@@ -59,6 +59,7 @@ config.vm.forward_port 5000, 5001
   #   puppet.manifest_file  = "Ubuntu 11.04.pp"
   # end
   config.vm.provision :puppet do |puppet|
+    puppet.options = "--verbose --debug"
     puppet.manifests_path = "manifests"
     puppet.manifest_file  = "manifests.pp"
   end
