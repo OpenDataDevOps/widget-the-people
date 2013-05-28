@@ -83,12 +83,12 @@ exec {
 
   "whoami":
     cwd => "/opt/widget-the-people",
-    command => "/usr/bin/whoami",
+    command => "/usr/bin/whoami > /vagrant/whoami",
     require => [Exec["fetch_repo"]];
 
   "install_app":
     cwd => "/opt/widget-the-people",
-    command => "sudo su /usr/bin/npm install",
+    command => "/usr/bin/sudo /usr/bin/npm install",
     require => [Exec["whoami"]];
 
   "run_app":
