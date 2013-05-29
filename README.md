@@ -5,13 +5,13 @@ A dev GitMachine pre-configured with Nodejs and Widget The People.
 
 # What's a GitMachine?
 
-GitMachines are pre-configured, accredidation-ready virtual machines in support of open government, open data, and civic innovation.
+GitMachines are pre-configured, accreditation-ready virtual machines in support of open government, open data, and civic innovation.
 
 GitMachines are open source and community maintained.
 
-A "dev" GitMachine is a pre-configured virtual machine that is not yet accredidation-ready. It will run just fine even though the government compliance work is incomplete.
+A "dev" GitMachine is a pre-configured virtual machine that is not yet accreditation-ready. It will run just fine even though the government compliance work is incomplete.
 
-A "gov-ready" GitMachome is a pre-configure and accredidation-ready virtual machine. That means the OS (and as much as the stack as possible) is configured to follow federal government guidelines.
+A "gov-ready" GitMachome is a pre-configure and accreditation-ready virtual machine. That means the OS (and as much as the stack as possible) is configured to follow federal government guidelines.
 
 # What's This GitMachine do?
 
