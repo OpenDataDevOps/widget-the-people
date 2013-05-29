@@ -34,7 +34,7 @@ You will need to do the following in your terminal using the command line.
 2. Go into widget-the-people directory and vagrant up the virtual machine `cd widget-the-people && vagrant up`
 3. Be _patient_ while vagrant configures your GitMachine. This can take 5 to 10 minutes or longer...
 4. When vagrant finishes configuring your GitMachine, open your browser and go to `http://localhost:5001` to access Widget the People
-5. Get into the virtual machine (vm) via ssh `vagrant ssh`
+5. Get into your GitMachine via ssh `vagrant ssh`
 
 
 # Use
