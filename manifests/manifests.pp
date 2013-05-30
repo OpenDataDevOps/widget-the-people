@@ -16,63 +16,80 @@ package { $nodePackages:
 }
 
 exec {
-  "create_tempFolder":
-    command => "/bin/mkdir /tmp/sources",
-    require => [Package[ $nodePackages ]];
+  "add_epel_6-8":
+  command => "/bin/su -c 'rpm -Uvh http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm'";
+  # command => "/bin/su -c 'rpm -Uvh http://download.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm'";
 
-  "fetch_nodejs":
-    cwd => "/tmp/sources",
-    command => "/usr/bin/wget http://nodejs.org/dist/node-latest.tar.gz",
-    require => [ Exec["create_tempFolder"]];
+  "yum_install_nodejs":
+  cwd => "/opt",
+  command => "/usr/bin/yum -y install nodejs",
+  require => [  Exec["add_epel_6-8"] ];
 
-  "unzip_nodejs":
-    cwd => "/tmp/sources",
-    command => "/bin/tar -zxvf /tmp/sources/node-latest.tar.gz",
-    require => [  Exec["fetch_nodejs"] ];
-
-  "config_nodejs":
-    command => "/tmp/sources/node-v0.10.8/configure",
-    require => [ Exec[ "unzip_nodejs" ]];
-
-  "make_nodejs":
-    cwd => "/tmp/sources/node-v0.10.8",
-    command => "/usr/bin/make",
-    timeout => 0,
-    require => [ Exec["config_nodejs"]];
-
-  "install_nodejs":
-    cwd => "/tmp/sources/node-v0.10.8",
-    command => "/usr/bin/make install",
-    require => [ Exec["make_nodejs"]];
-
-  "move_nodejs":
-    command => "/bin/mv /tmp/sources/node-v0.10.8/out/Release /opt/node-v0.10.8",
-    require => [ Exec["install_nodejs"]];
-
-  "ln_nodejs":
-    command => "/bin/ln -s /opt/node-v0.10.8/node /usr/bin/node",
-    require => [ Exec["move_nodejs"]];
+  "yum_install_npm":
+  cwd => "/opt",
+  command => "/usr/bin/yum -y install npm",
+  require => [  Exec["yum_install_nodejs"] ];
 }
 
-exec {
-#  "create_RepoFolder":
-#    command => "/bin/mkdir /opt/widget-the-people",
-#    require => [Exec[ "ln_nodejs" ]];
+#exec {
+#  "create_tempFolder":
+#    command => "/bin/mkdir /tmp/sources",
+#    require => [Package[ $nodePackages ]];
+#
+#  "fetch_nodejs":
+#    cwd => "/tmp/sources",
+#    command => "/usr/bin/wget http://nodejs.org/dist/node-latest.tar.gz",
+#    require => [ Exec["create_tempFolder"]];
+#
+#  "unzip_nodejs":
+#    cwd => "/tmp/sources",
+#    command => "/bin/tar -zxvf /tmp/sources/node-latest.tar.gz",
+#    require => [  Exec["fetch_nodejs"] ];
+#
+#  "config_nodejs":
+#    command => "/tmp/sources/node-v0.10.8/configure",
+#    require => [ Exec[ "unzip_nodejs" ]];
+#
+#  "make_nodejs":
+#    cwd => "/tmp/sources/node-v0.10.8",
+#    command => "/usr/bin/make",
+#    require => [ Exec["config_nodejs"]];
+#
+#  "install_nodejs":
+#    cwd => "/tmp/sources/node-v0.10.8",
+#    command => "/usr/bin/make install",
+#    require => [ Exec["make_nodejs"]];
+#
+#  "move_nodejs":
+#    command => "/bin/mv /tmp/sources/node-v0.10.8/out/Release /opt/node-v0.10.8",
+#    require => [ Exec["install_nodejs"]];
+#
+#  "ln_nodejs":
+#    command => "/bin/ln -s /opt/node-v0.10.8/node /usr/bin/node",
+#    require => [ Exec["move_nodejs"]];
+#}
 
+exec {
   "fetch_repo":
     cwd => "/opt",
     command => "/usr/bin/git clone https://github.com/douglasback/widget-the-people.git",
-    require => [Exec["ln_nodejs"]];
+    require => [Exec["yum_install_npm"]];
+
+  "whoami":
+    cwd => "/opt/widget-the-people",
+    command => "/usr/bin/whoami > /vagrant/whoami",
+    require => [Exec["fetch_repo"]];
+
+# NOTE: npm installs must be done with sudo
 
   "install_app":
     cwd => "/opt/widget-the-people",
-    command => "/usr/bin/sudo /usr/local/bin/npm install",
-    timeout => 0,
-    require => [Exec["fetch_repo"]];
+    command => "/usr/bin/sudo /usr/bin/npm install",
+    require => [Exec["whoami"]];
 
   "run_app":
     cwd => "/opt/widget-the-people",
-    command => "/usr/local/bin/node app.js&",
+    command => "/usr/bin/node app.js&",
     require => [Exec["install_app"]];
 }
 

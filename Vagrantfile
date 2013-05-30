@@ -7,9 +7,11 @@ Vagrant::Config.run do |config|
   # please see the online documentation at vagrantup.com.
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "centos_MIN"
-  config.vm.box_url = "https://dl.dropbox.com/u/7225008/Vagrant/CentOS-6.3-x86_64-minimal.box"
-
+  #config.vm.box = "centos_MIN"
+  #config.vm.box_url = "https://dl.dropbox.com/u/7225008/Vagrant/CentOS-6.3-x86_64-minimal.box" 
+  config.vm.box = "centos_nrel"
+  config.vm.box_url = "http://developer.nrel.gov/downloads/vagrant-boxes/CentOS-6.3-x86_64-v20130101.box"
+  
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
   # config.vm.box_url = "http://domain.com/path/to/above.box"
@@ -31,7 +33,9 @@ Vagrant::Config.run do |config|
   # Forward a port from the guest to the host, which allows for outside
   # computers to access the VM, whereas host only networking does not.
   # config.vm.forward_port 80, 8080
-config.vm.forward_port 5000, 5001
+
+  config.vm.forward_port 5000, 5001
+
   # Share an additional folder to the guest VM. The first argument is
   # an identifier, the second is the path on the guest to mount the
   # folder, and the third is the path on the host to the actual folder.
@@ -59,6 +63,7 @@ config.vm.forward_port 5000, 5001
   #   puppet.manifests_path = "manifests"
   #   puppet.manifest_file  = "Ubuntu 11.04.pp"
   # end
+
   config.vm.provision :puppet do |puppet|
     puppet.options = "--verbose --debug"
     puppet.manifests_path = "manifests"
