@@ -11,14 +11,11 @@ GitMachines are open source and community maintained.
 
 A "dev" GitMachine is a pre-configured virtual machine that is not yet accreditation-ready. It will run just fine even though the government compliance work is incomplete.
 
-A "gov-ready" GitMachome is a pre-configure and accreditation-ready virtual machine. That means the OS (and as much as the stack as possible) is configured to follow federal government guidelines.
+A "gov-ready" GitMachine is a pre-configure and accreditation-ready virtual machine. That means the OS and as much as the stack as possible is configured to follow federal government guidelines.
 
 # What's This GitMachine do?
 
 This dev GitMachine has everything you need to run Douglas Back's [Widget The People](https://github.com/douglasback/widget-the-people) Nodejs application.
-
-This GitMachine depends on Vagrant(http://vagrantup.com) (software for creating lightweight, portable development environments) and VirtualBox(http://virtualbox.org) (virtualization software).
-
 
 # Dependencies
 
